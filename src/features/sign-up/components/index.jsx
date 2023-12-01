@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { TextField, Button, Grid } from "@mui/material";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
+import AuthContext from "../../context/authProvider.js";
 import { signUpValidationSchema } from "../validations/sign-up-validation.js";
 import axios from "../../../api/axios.js";
 import CalmQuest from "../../base/assets/images/png/calm-quest.png";
@@ -10,6 +13,7 @@ import COLORS from "../../base/constants/colors.js";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { setAuth, setUser } = useContext(AuthContext);
   return (
     <Grid
       container
@@ -80,7 +84,10 @@ const SignUp = () => {
                 email: values?.email,
                 password: values?.password,
               });
-              console.log(response);
+              setAuth({ accessToken: response?.data?.accessToken });
+              setUser({
+                userId: jwtDecode(response?.data?.accessToken)?.userId,
+              });
               resetForm();
               toast.success("Sign Up Sccessful!");
               navigate(ROUTES.HOME);
