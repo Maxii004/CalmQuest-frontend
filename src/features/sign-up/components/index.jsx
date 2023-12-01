@@ -78,7 +78,7 @@ const SignUp = () => {
               })
             );
             try {
-              const response = await axios.post("/signup", {
+              const response = await axios.post("/auth/signup", {
                 name: values?.name,
                 age: values?.age,
                 email: values?.email,
@@ -87,6 +87,8 @@ const SignUp = () => {
               setAuth({ accessToken: response?.data?.accessToken });
               setUser({
                 userId: jwtDecode(response?.data?.accessToken)?.userId,
+                name: jwtDecode(response?.data?.accessToken)?.userName,
+                email: jwtDecode(response?.data?.accessToken)?.userEmail,
               });
               resetForm();
               toast.success("Sign Up Sccessful!");

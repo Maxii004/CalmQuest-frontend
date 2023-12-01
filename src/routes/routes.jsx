@@ -51,7 +51,7 @@ const routes = [
     ],
   },
   {
-    path: ROUTES.FORUM,
+    path: ROUTES.CALMCREW,
     element: (
       <PersistLogin>
         <AuthWrapper>

@@ -10,20 +10,23 @@ import {
   Container,
   Avatar,
   Button,
-  Tooltip,
   MenuItem,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import useAuth from "../../../hooks/use-auth";
 import useLogOut from "../../../hooks/use-logout";
 import ROUTES from "../../constants/routes";
 import COLORS from "../../constants/colors";
+import { AppMenu, UserMenu } from "./components";
 
-const pages = ["Activities", "Helplines", "Talk it out"];
 const settings = ["Profile", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   //
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const logOut = useLogOut();
@@ -41,14 +44,13 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = async () => {
     setAnchorElUser(null);
-    await logOut();
-    navigate(ROUTES.LOGIN, { replace: true });
   };
 
   return (
     <AppBar sx={{ bgcolor: COLORS.CRYSTAL }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="inherit">
         <Toolbar disableGutters>
+          {/** Logo in Nav bar for devices md and above */}
           <Button
             onClick={() =>
               navigate(ROUTES.HOME, {
@@ -57,6 +59,7 @@ const ResponsiveAppBar = () => {
               })
             }
             sx={{
+              display: { xs: "none", md: "flex" },
               ":hover": {
                 backgroundColor: COLORS.CRYSTAL,
               },
@@ -78,6 +81,7 @@ const ResponsiveAppBar = () => {
               CalmQuest
             </Typography>
           </Button>
+          {/** App Menu for devices sm and below*/}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -87,7 +91,7 @@ const ResponsiveAppBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {/* <MenuIcon /> */}
+              <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -104,16 +108,48 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "flex", md: "none" },
+                "& .MuiMenu-paper": {
+                  mt: 2,
+                  ml: 2,
+                  position: "fixed",
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  bottom: 0,
+                  width: "100%",
+                  maxWidth: "100%",
+                  height: "100%",
+                  maxHeight: "100%",
+                  textAlign: "center",
+                  zIndex: 999,
+                  backgroundColor: COLORS.CRYSTAL,
+                  color: "white",
+                  ":hover": {
+                    cursor: "pointer",
+                  },
+                },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem sx={{ justifyContent: "right" }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleCloseNavMenu}
+                  sx={{ color: COLORS.WHITE, ":hover": { color: COLORS.RED } }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </MenuItem>
+              <AppMenu
+                handleCloseNavMenu={handleCloseNavMenu}
+                anchorElNav={anchorElNav}
+              />
             </Menu>
           </Box>
+          {/** Logo in Nav bar for devices sm and below */}
           <Button
             onClick={() =>
               navigate(ROUTES.HOME, {
@@ -122,6 +158,8 @@ const ResponsiveAppBar = () => {
               })
             }
             sx={{
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
               ":hover": {
                 backgroundColor: COLORS.CRYSTAL,
               },
@@ -131,7 +169,6 @@ const ResponsiveAppBar = () => {
               variant="h5"
               noWrap
               sx={{
-                mr: 2,
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
                 fontFamily: "Oregano, cursive",
@@ -144,24 +181,22 @@ const ResponsiveAppBar = () => {
               CalmQuest
             </Typography>
           </Button>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+          {/** App Menu for devices md and above */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "flex-start",
+              textTransform: "none",
+            }}
+          >
+            <AppMenu />
           </Box>
-
+          {/** User menu for devices md and above */}
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Mineth Perera" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />
+            </IconButton>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -178,11 +213,10 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <UserMenu
+                handleCloseUserMenu={handleCloseNavMenu}
+                anchorElUser={anchorElUser}
+              />
             </Menu>
           </Box>
         </Toolbar>

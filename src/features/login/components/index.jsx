@@ -53,6 +53,8 @@ const Login = () => {
               setAuth({ accessToken: response?.data?.accessToken });
               setUser({
                 userId: jwtDecode(response?.data?.accessToken)?.userId,
+                name: jwtDecode(response?.data?.accessToken)?.userName,
+                email: jwtDecode(response?.data?.accessToken)?.userEmail,
               });
               resetForm();
               toast.success("Login Sccessful!");
