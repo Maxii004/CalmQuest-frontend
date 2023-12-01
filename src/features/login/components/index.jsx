@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button, Grid } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 import AuthContext from "../../context/authProvider";
 import loginValidation from "../validations/login-validation";
 import axios from "../../../api/axios";
@@ -12,7 +13,7 @@ import COLORS from "../../base/constants/colors";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth, setUser } = useContext(AuthContext);
   //
   return (
     <Grid
@@ -44,24 +45,19 @@ const Login = () => {
           }}
           validationSchema={loginValidation}
           onSubmit={async (values, { resetForm }) => {
-            console.log(values);
-            console.log(
-              JSON.stringify({
-                email: values?.email,
-                password: values?.password,
-              })
-            );
             try {
               const response = await axios.post("/auth/login", {
                 email: values?.email,
                 password: values?.password,
               });
               setAuth({ accessToken: response?.data?.accessToken });
+              setUser({
+                userId: jwtDecode(response?.data?.accessToken)?.userId,
+              });
               resetForm();
               toast.success("Login Sccessful!");
               navigate(ROUTES.HOME, { replace: true });
             } catch (error) {
-              console.log(error);
               toast.error(error?.response?.data?.message);
             }
           }}

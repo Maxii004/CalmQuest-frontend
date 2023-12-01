@@ -3,6 +3,7 @@ import LaunchPage from "../features/launch-page";
 import { Login } from "../features/login";
 import { SignUp } from "../features/sign-up";
 import HomePage from "../features/home-page";
+import CalmCrew from "../features/calm-crew";
 import DashboardLayout from "../features/base/layouts/dashboard";
 import AuthLayout from "../features/base/layouts/auth";
 import AuthWrapper from "../features/base/auth";
@@ -33,11 +34,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: ROUTES.HOME,
-  //   element: <HomePage />,
-  // },
-
   {
     path: ROUTES.HOME,
     element: (
@@ -51,6 +47,22 @@ const routes = [
       {
         path: "",
         element: <HomePage />,
+      },
+    ],
+  },
+  {
+    path: ROUTES.FORUM,
+    element: (
+      <PersistLogin>
+        <AuthWrapper>
+          <DashboardLayout />
+        </AuthWrapper>
+      </PersistLogin>
+    ),
+    children: [
+      {
+        path: "",
+        element: <CalmCrew />,
       },
     ],
   },
