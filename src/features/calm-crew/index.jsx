@@ -82,11 +82,17 @@ const CalmCrew = () => {
       socket.current.on("typing", () => setIsTyping(true));
       socket.current.on("stop typing", () => setIsTyping(false));
       socket.current.on("message received", (message) => {
-        console.log(message);
         setMessages((prevMessages) => [...prevMessages, message]);
       });
     }
+    // Cleanup function
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
   }, []);
+
   //
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -149,7 +155,7 @@ const CalmCrew = () => {
               color: COLORS.CRYSTAL,
             },
             mt: 1,
-            mx: "40%",
+            ml: "44%",
           }}
           onClick={communityGuideLines}
         >
@@ -168,10 +174,10 @@ const CalmCrew = () => {
           alignContent: "center",
           p: 3,
           bgcolor: COLORS.AURERISH_WHITE,
-          mx: "20%",
+          mx: "25%",
           my: "2%",
-          width: "60%",
-          height: "60%",
+          width: "50%",
+          height: "65%",
           borderRadius: "5%",
           overflowY: "hidden",
         }}
