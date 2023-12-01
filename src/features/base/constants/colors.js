@@ -10,6 +10,7 @@ const COLORS = {
   LAPIS_LAZULI: "#207BA1",
   PLATINUM: "#E8E8E8",
   LIGHT_GREY: "#D3D3D3",
+  RED: "#FF0000",
 };
 //
 export default COLORS;

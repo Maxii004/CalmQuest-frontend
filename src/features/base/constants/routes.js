@@ -5,8 +5,8 @@ const ROUTES = {
   HOME: "/home",
   JOURNALS: "/journals",
   JOURNAL: "/journals/:id",
-  CHATBOT: "/zen-bud",
-  FORUM: "/calm-crew",
+  ZENBUD: "/zen-bud",
+  CALMCREW: "/calm-crew",
   PROFILE: "/profile/:id",
 };
 
