@@ -4,6 +4,7 @@ import { Login } from "../features/login";
 import { SignUp } from "../features/sign-up";
 import HomePage from "../features/home-page";
 import CalmCrew from "../features/calm-crew";
+import Profile from "../features/profile";
 import DashboardLayout from "../features/base/layouts/dashboard";
 import AuthLayout from "../features/base/layouts/auth";
 import AuthWrapper from "../features/base/auth";
@@ -63,6 +64,22 @@ const routes = [
       {
         path: "",
         element: <CalmCrew />,
+      },
+    ],
+  },
+  {
+    path: ROUTES.PROFILE,
+    element: (
+      <PersistLogin>
+        <AuthWrapper>
+          <DashboardLayout />
+        </AuthWrapper>
+      </PersistLogin>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Profile />,
       },
     ],
   },
