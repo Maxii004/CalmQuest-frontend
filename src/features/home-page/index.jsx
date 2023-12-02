@@ -12,15 +12,40 @@ import CalmQuest from "../base/assets/images/png/calm-quest.png";
 import BackGroundImage from "../base/assets/images/jpg/backgroundimage1.jpg";
 import Questionnaire from "../questionnaire";
 import COLORS from "../base/constants/colors";
+import useAuth from "../hooks/use-auth";
+import useAxiosPrivate from "../hooks/use-axios-private";
+import moment from "moment";
+import { ISO_WITHOUT_TIME } from "../base/constants/date-formatting";
 //
 const HomePage = () => {
+  const { user } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
+  //
+  const [authUser, setAuthUser] = useState({});
   const [showImage, setShowImage] = useState(false);
   const [showTextBox, setShowTextBox] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [openQuestionnaire, setOpenQuestionnaire] = useState(false);
+  const [attempted, setAttempted] = useState(false);
   //
   const handleOnClick = () => {
     setOpenQuestionnaire(true);
+  };
+  //
+  const handleOnClose = () => {
+    setOpenQuestionnaire(false);
+  };
+
+  const getAuthUser = async () => {
+    const { data } = await axiosPrivate.get(`/users/${user?.userId}`);
+    setAuthUser(data?.user);
+    if (
+      moment(authUser?.latestDailyAverageScore?.date).format(
+        ISO_WITHOUT_TIME
+      ) === moment(new Date()).format(ISO_WITHOUT_TIME)
+    ) {
+      setAttempted(true);
+    }
   };
 
   useEffect(() => {
@@ -35,6 +60,10 @@ const HomePage = () => {
       clearTimeout(textBoxTimeout);
       clearTimeout(buttonTimeout);
     };
+  }, []);
+
+  useEffect(() => {
+    getAuthUser();
   }, []);
   return (
     <>
@@ -141,7 +170,11 @@ const HomePage = () => {
                   </Button>
                 </Box>
               </Slide>
-              <Questionnaire openDialog={openQuestionnaire} />
+              <Questionnaire
+                openDialog={openQuestionnaire}
+                handleOnClose={handleOnClose}
+                hasAttempted={attempted}
+              />
             </Grid>
           </Grid>
         </Box>

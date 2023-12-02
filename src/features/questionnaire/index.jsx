@@ -2,9 +2,9 @@ import { Dialog, DialogTitle } from "@mui/material";
 import { QuestionnaireForm } from "./components";
 import COLORS from "../base/constants/colors";
 
-const Questionnaire = ({ openDialog }) => {
+const Questionnaire = ({ openDialog, handleOnClose, hasAttempted }) => {
   return (
-    <Dialog open={openDialog} fullScreen fullWidth>
+    <Dialog open={openDialog} onClose={handleOnClose} maxWidth="md">
       <DialogTitle
         sx={{
           textAlign: "center",
@@ -15,7 +15,7 @@ const Questionnaire = ({ openDialog }) => {
       >
         CalmQuest Daily Questionnaire
       </DialogTitle>
-      <QuestionnaireForm />
+      <QuestionnaireForm attempted={hasAttempted} />
     </Dialog>
   );
 };

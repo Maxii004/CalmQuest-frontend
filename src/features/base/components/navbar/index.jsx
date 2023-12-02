@@ -15,12 +15,9 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import useAuth from "../../../hooks/use-auth";
-import useLogOut from "../../../hooks/use-logout";
 import ROUTES from "../../constants/routes";
 import COLORS from "../../constants/colors";
 import { AppMenu, UserMenu } from "./components";
-
-const settings = ["Profile", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -29,7 +26,6 @@ const ResponsiveAppBar = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const logOut = useLogOut();
   //
   const handleOpenNavMenu = (e) => {
     setAnchorElNav(e.currentTarget);
@@ -195,7 +191,9 @@ const ResponsiveAppBar = () => {
           {/** User menu for devices md and above */}
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />
+              <Avatar alt={user?.userName} src="/static/images/avatar/2.jpg">
+                {user?.userName?.charAt(0)}
+              </Avatar>
             </IconButton>
             <Menu
               sx={{ mt: "45px" }}
