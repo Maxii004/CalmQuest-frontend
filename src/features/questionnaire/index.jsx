@@ -15,7 +15,10 @@ const Questionnaire = ({ openDialog, handleOnClose, hasAttempted }) => {
       >
         CalmQuest Daily Questionnaire
       </DialogTitle>
-      <QuestionnaireForm attempted={hasAttempted} />
+      <QuestionnaireForm
+        attempted={hasAttempted}
+        handleOnClose={handleOnClose}
+      />
     </Dialog>
   );
 };

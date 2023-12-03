@@ -29,17 +29,25 @@ const HomePage = () => {
   const [attempted, setAttempted] = useState(false);
   //
   const handleOnClick = () => {
+    handleAlreadyAttemptedQuiz();
     setOpenQuestionnaire(true);
   };
   //
   const handleOnClose = () => {
     setOpenQuestionnaire(false);
+    if (!attempted) {
+      setAttempted(true);
+    }
   };
 
   const getAuthUser = async () => {
     const { data } = await axiosPrivate.get(`/users/${user?.userId}`);
-    setAuthUser(data?.user);
+    setAuthUser(data);
+  };
+
+  const handleAlreadyAttemptedQuiz = async () => {
     if (
+      authUser?.latestDailyAverageScore &&
       moment(authUser?.latestDailyAverageScore?.date).format(
         ISO_WITHOUT_TIME
       ) === moment(new Date()).format(ISO_WITHOUT_TIME)
@@ -61,10 +69,11 @@ const HomePage = () => {
       clearTimeout(buttonTimeout);
     };
   }, []);
-
+  //
   useEffect(() => {
     getAuthUser();
-  }, []);
+  }, [attempted]);
+
   return (
     <>
       <Container

@@ -5,6 +5,7 @@ import { SignUp } from "../features/sign-up";
 import HomePage from "../features/home-page";
 import CalmCrew from "../features/calm-crew";
 import Profile from "../features/profile";
+import ZenBud from "../features/zenbud";
 import DashboardLayout from "../features/base/layouts/dashboard";
 import AuthLayout from "../features/base/layouts/auth";
 import AuthWrapper from "../features/base/auth";
@@ -80,6 +81,22 @@ const routes = [
       {
         path: "",
         element: <Profile />,
+      },
+    ],
+  },
+  {
+    path: ROUTES.ZENBUD,
+    element: (
+      <PersistLogin>
+        <AuthWrapper>
+          <DashboardLayout />
+        </AuthWrapper>
+      </PersistLogin>
+    ),
+    children: [
+      {
+        path: "",
+        element: <ZenBud />,
       },
     ],
   },

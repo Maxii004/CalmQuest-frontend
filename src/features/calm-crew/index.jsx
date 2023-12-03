@@ -24,6 +24,7 @@ const CalmCrew = () => {
   //
   const ENDPOINT = process.env.REACT_APP_BACKEND_API;
   let socket = useRef(null);
+  const endOfMessagesRef = useRef(null);
   //
   const defaultOptions = {
     loop: true,
@@ -52,7 +53,6 @@ const CalmCrew = () => {
           content: newMessage,
         });
         setMessages((prevMessages) => [...prevMessages, data]);
-        console.log("socket", socket?.current?.id);
         socket.current.emit("sendMessage", data);
       } catch (error) {
         toast.error(error?.response?.data?.message);
@@ -71,7 +71,6 @@ const CalmCrew = () => {
   const communityGuideLines = () => {
     setOpenDialog(true);
   };
-
   //
   useEffect(() => {
     if (!socket.current) {
@@ -92,7 +91,10 @@ const CalmCrew = () => {
       }
     };
   }, []);
-
+  //
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   //
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -214,6 +216,7 @@ const CalmCrew = () => {
         ) : (
           <div className="messages">
             <ChatDisplay messages={messages} />
+            <div ref={endOfMessagesRef} />
           </div>
         )}
         <FormControl variant="filled">
