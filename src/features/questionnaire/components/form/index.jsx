@@ -25,25 +25,27 @@ import { ISO_WITHOUT_TIME } from "../../../base/constants/date-formatting";
 import { toast } from "react-toastify";
 import COLORS from "../../../base/constants/colors";
 
-const QuestionnaireForm = ({ attempted }) => {
+const QuestionnaireForm = ({ attempted, handleOnClose }) => {
   const axiosPrivate = useAxiosPrivate();
   const { user } = useAuth();
   //
   return (
     <>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-        spacing={1}
-        pb={3}
-      >
-        <InfoOutlined sx={{ height: 20, width: 20, color: "red" }} />
-        <Typography variant="body" color="red">
-          You have answered the questionnaire for today. Let's try again
-          tomorrow.
-        </Typography>
-      </Stack>
+      {attempted && (
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={1}
+          pb={3}
+        >
+          <InfoOutlined sx={{ height: 20, width: 20, color: "red" }} />
+          <Typography variant="body" color="red">
+            You have answered the questionnaire for today. Let's try again
+            tomorrow.
+          </Typography>
+        </Stack>
+      )}
       <Formik
         initialValues={{
           q1: "",
@@ -57,17 +59,13 @@ const QuestionnaireForm = ({ attempted }) => {
           q9: "",
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log("Form data", values);
           let scores = [];
           for (let value in values) {
             scores.push(POINTS_OF_QUESTIONNARIE_ANSWERS[values[value]]);
           }
           const total = totalScore(scores);
-          console.log("Total score", total);
           const depressionSeverity = severityCheck(total);
-          console.log("Depression severity", depressionSeverity);
           const today = moment(new Date()).format(ISO_WITHOUT_TIME);
-          console.log("Today", today);
           try {
             const response = await axiosPrivate.post(
               `/users/${user?.userId}/questionnaire`,
@@ -77,7 +75,7 @@ const QuestionnaireForm = ({ attempted }) => {
                 date: today,
               }
             );
-            console.log(response);
+            handleOnClose();
             if (!response?.data) {
               toast.error("Something went wrong");
             }

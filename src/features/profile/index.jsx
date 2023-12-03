@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import {
   Grid,
-  Typography,
-  Box,
-  Stack,
-  Divider,
+  // Typography,
+  // Box,
+  // Stack,
+  // Divider,
   Container,
   Avatar,
 } from "@mui/material";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
+// import BorderColorIcon from "@mui/icons-material/BorderColor";
 import useAxiosPrivate from "../hooks/use-axios-private";
 import { toast } from "react-toastify";
 
@@ -21,8 +21,7 @@ const Profile = () => {
   const fetchUser = async () => {
     try {
       const { data } = await axiosPrivate.get(`/users/${id}`);
-      console.log(data);
-      setAuthUser(data?.user);
+      setAuthUser(data);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }

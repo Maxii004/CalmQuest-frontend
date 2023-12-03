@@ -68,15 +68,6 @@ const SignUp = () => {
           }}
           validationSchema={signUpValidationSchema}
           onSubmit={async (values, { resetForm }) => {
-            console.log(values);
-            console.log(
-              JSON.stringify({
-                name: values?.name,
-                age: values?.age,
-                email: values?.email,
-                password: values?.password,
-              })
-            );
             try {
               const response = await axios.post("/auth/signup", {
                 name: values?.name,

@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import axios from "../../api/axios";
 import useAuth from "./use-auth";
 
@@ -10,6 +11,7 @@ const useLogOut = () => {
       await axios("/auth/logout");
     } catch (err) {
       console.error(err);
+      toast.error(err?.message);
     }
   };
   //
