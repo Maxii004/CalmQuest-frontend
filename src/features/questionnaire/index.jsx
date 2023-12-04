@@ -2,7 +2,12 @@ import { Dialog, DialogTitle } from "@mui/material";
 import { QuestionnaireForm } from "./components";
 import COLORS from "../base/constants/colors";
 
-const Questionnaire = ({ openDialog, handleOnClose, hasAttempted }) => {
+const Questionnaire = ({
+  openDialog,
+  handleOnClose,
+  hasAttempted,
+  setOnSubmit,
+}) => {
   return (
     <Dialog open={openDialog} onClose={handleOnClose} maxWidth="md">
       <DialogTitle
@@ -18,6 +23,7 @@ const Questionnaire = ({ openDialog, handleOnClose, hasAttempted }) => {
       <QuestionnaireForm
         attempted={hasAttempted}
         handleOnClose={handleOnClose}
+        setOnSubmit={setOnSubmit}
       />
     </Dialog>
   );

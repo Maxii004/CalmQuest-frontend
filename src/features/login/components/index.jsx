@@ -51,10 +51,11 @@ const Login = () => {
                 password: values?.password,
               });
               setAuth({ accessToken: response?.data?.accessToken });
+              const decoded = jwtDecode(response?.data?.accessToken);
               setUser({
-                userId: jwtDecode(response?.data?.accessToken)?.userId,
-                name: jwtDecode(response?.data?.accessToken)?.userName,
-                email: jwtDecode(response?.data?.accessToken)?.userEmail,
+                userId: decoded?.userId,
+                name: decoded?.userName,
+                email: decoded?.userEmail,
               });
               resetForm();
               toast.success("Login Sccessful!");

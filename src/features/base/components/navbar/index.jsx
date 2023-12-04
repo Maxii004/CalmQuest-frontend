@@ -72,6 +72,7 @@ const ResponsiveAppBar = () => {
                 letterSpacing: ".3rem",
                 color: COLORS.MOONSTONE,
                 textDecoration: "none",
+                textTransform: "none",
               }}
             >
               CalmQuest
@@ -172,6 +173,7 @@ const ResponsiveAppBar = () => {
                 letterSpacing: ".3rem",
                 color: COLORS.MOONSTONE,
                 textDecoration: "none",
+                textTransform: "none",
               }}
             >
               CalmQuest
@@ -189,14 +191,25 @@ const ResponsiveAppBar = () => {
             <AppMenu />
           </Box>
           {/** User menu for devices md and above */}
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt={user?.userName} src="/static/images/avatar/2.jpg">
-                {user?.userName?.charAt(0)}
-              </Avatar>
+          <Box>
+            <IconButton
+              onClick={handleOpenUserMenu}
+              sx={{
+                p: 0,
+                ":hover": {
+                  backgroundColor: COLORS.CRYSTAL,
+                },
+              }}
+            >
+              <Avatar>{user?.name?.charAt(0)}</Avatar>
             </IconButton>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{
+                mt: "45px",
+                ".MuiList-root": {
+                  bgcolor: COLORS.CRYSTAL,
+                },
+              }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -212,7 +225,7 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               <UserMenu
-                handleCloseUserMenu={handleCloseNavMenu}
+                handleCloseUserMenu={handleCloseUserMenu}
                 anchorElUser={anchorElUser}
               />
             </Menu>

@@ -27,15 +27,17 @@ const HomePage = () => {
   const [showButton, setShowButton] = useState(false);
   const [openQuestionnaire, setOpenQuestionnaire] = useState(false);
   const [attempted, setAttempted] = useState(false);
+  const [onSubmit, setOnSubmit] = useState(false);
   //
   const handleOnClick = () => {
     handleAlreadyAttemptedQuiz();
     setOpenQuestionnaire(true);
+    setOnSubmit(false);
   };
   //
   const handleOnClose = () => {
     setOpenQuestionnaire(false);
-    if (!attempted) {
+    if (!attempted && onSubmit) {
       setAttempted(true);
     }
   };
@@ -75,120 +77,118 @@ const HomePage = () => {
   }, [attempted]);
 
   return (
-    <>
-      <Container
-        maxWidth="xl"
-        sx={{
-          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${BackGroundImage})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      >
-        <Box height="90.75vh">
-          <Grid container display="flex" direction="row">
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              md={6}
-              lg={6}
-              height="90.75vh"
-              justifyContent="center"
-              alignContent="center"
-              textAlign="center"
-            >
-              <Slide direction="up" in={showImage} timeout={1000}>
-                <Box
-                  bgcolor={COLORS.CRYSTAL}
-                  mt="10%"
-                  ml="17%"
-                  borderRadius="50%"
-                  height={500}
-                  width={500}
-                  sx={{ boxShadow: 20 }}
-                >
-                  <img src={CalmQuest} alt="launch-page" />
-                </Box>
-              </Slide>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              md={6}
-              lg={6}
-              height="90.75vh"
-              textAlign="center"
-            >
-              <Fade in={showTextBox}>
-                <Box
-                  sx={{
-                    border: `2px solid ${COLORS.MOONSTONE}`,
-                    borderRadius: "5%",
-                    mt: "15%",
-                    p: 2,
-                    ml: "10%",
-                    width: "50%",
-                    bgcolor: COLORS.FADED_WHITE,
-                  }}
-                >
-                  <Box>
-                    <Typography
-                      variant="h4"
-                      color={COLORS.MOONSTONE}
-                      fontWeight={500}
-                    >
-                      Welcome to CalmQuest!
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography
-                      variant="h6"
-                      // fontFamily="Roboto, Helvetica,Arial,sans-serif"
-                      sx={{
-                        wordBreak: "break-word",
-                        color: COLORS.LAPIS_LAZULI,
-                      }}
-                    >
-                      CalmQuest is a web app dedicated to help individuals
-                      having a rough time with their mental health to boost up
-                      their mental wellness by analyzing your mental state and
-                      helping you open up to the troubles that are the source of
-                      your discomfort so that you can let go and relax. Help us
-                      analyze your mental state by filling out the questionnaire
-                      below.
-                    </Typography>
-                  </Box>
-                </Box>
-              </Fade>
-              <Slide in={showButton} direction="up">
-                <Box mt={1} ml="12%" width="50%">
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      bgcolor: COLORS.MOONSTONE,
-                      borderRadius: 5,
-                      color: "white",
-                      ":hover": {
-                        bgcolor: COLORS.MOONSTONE_BLUE,
-                      },
-                    }}
-                    onClick={handleOnClick}
-                  >
-                    <Typography variant="h6">Take the Questionnaire</Typography>
-                  </Button>
-                </Box>
-              </Slide>
-              <Questionnaire
-                openDialog={openQuestionnaire}
-                handleOnClose={handleOnClose}
-                hasAttempted={attempted}
-              />
-            </Grid>
+    <Container
+      maxWidth="xl"
+      sx={{
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${BackGroundImage})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <Box height="90.75vh">
+        <Grid container display="flex" direction="row">
+          <Grid
+            item
+            xs={6}
+            sm={6}
+            md={6}
+            lg={6}
+            height="90.75vh"
+            justifyContent="center"
+            alignContent="center"
+            textAlign="center"
+          >
+            <Slide direction="up" in={showImage} timeout={1000}>
+              <Box
+                bgcolor={COLORS.CRYSTAL}
+                mt="10%"
+                ml="17%"
+                borderRadius="50%"
+                height={500}
+                width={500}
+                sx={{ boxShadow: 20 }}
+              >
+                <img src={CalmQuest} alt="launch-page" />
+              </Box>
+            </Slide>
           </Grid>
-        </Box>
-      </Container>
-    </>
+          <Grid
+            item
+            xs={6}
+            sm={6}
+            md={6}
+            lg={6}
+            height="90.75vh"
+            textAlign="center"
+          >
+            <Fade in={showTextBox}>
+              <Box
+                sx={{
+                  border: `2px solid ${COLORS.MOONSTONE}`,
+                  borderRadius: "5%",
+                  mt: "15%",
+                  p: 2,
+                  ml: "10%",
+                  width: "50%",
+                  bgcolor: COLORS.FADED_WHITE,
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="h4"
+                    color={COLORS.MOONSTONE}
+                    fontWeight={500}
+                  >
+                    Welcome to CalmQuest!
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h6"
+                    // fontFamily="Roboto, Helvetica,Arial,sans-serif"
+                    sx={{
+                      wordBreak: "break-word",
+                      color: COLORS.LAPIS_LAZULI,
+                    }}
+                  >
+                    CalmQuest is a web app dedicated to help individuals having
+                    a rough time with their mental health to boost up their
+                    mental wellness by analyzing your mental state and helping
+                    you open up to the troubles that are the source of your
+                    discomfort so that you can let go and relax. Help us analyze
+                    your mental state by filling out the questionnaire below.
+                  </Typography>
+                </Box>
+              </Box>
+            </Fade>
+            <Slide in={showButton} direction="up">
+              <Box mt={1} ml="12%" width="50%">
+                <Button
+                  variant="outlined"
+                  sx={{
+                    bgcolor: COLORS.MOONSTONE,
+                    borderRadius: 5,
+                    color: "white",
+                    ":hover": {
+                      bgcolor: COLORS.MOONSTONE_BLUE,
+                    },
+                  }}
+                  onClick={handleOnClick}
+                >
+                  <Typography variant="h6">Take the Questionnaire</Typography>
+                </Button>
+              </Box>
+            </Slide>
+            <Questionnaire
+              openDialog={openQuestionnaire}
+              handleOnClose={handleOnClose}
+              hasAttempted={attempted}
+              setOnSubmit={setOnSubmit}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 //

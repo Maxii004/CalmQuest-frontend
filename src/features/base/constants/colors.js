@@ -11,6 +11,10 @@ const COLORS = {
   PLATINUM: "#E8E8E8",
   LIGHT_GREY: "#D3D3D3",
   RED: "#FF0000",
+  LEMON_YELLOW: "#FFFF9F",
+  YELLOW: "#FFE417",
+  ROYAL_GOLD: "#F5BD02",
+  ORANGE: "#FF9900",
 };
 //
 export default COLORS;
