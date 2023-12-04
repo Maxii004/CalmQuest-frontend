@@ -8,6 +8,7 @@ const ROUTES = {
   ZENBUD: "/zen-bud",
   CALMCREW: "/calm-crew",
   PROFILE: "/profile/:id",
+  HELPLINES: "/helplines",
 };
 
 export default ROUTES;

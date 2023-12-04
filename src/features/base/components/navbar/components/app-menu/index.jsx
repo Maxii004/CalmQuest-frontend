@@ -22,6 +22,7 @@ const AppMenu = ({ handleCloseNavMenu, anchorElNav }) => {
   const pages = [
     { text: PAGES.ZENBUD, route: ROUTES.ZENBUD },
     { text: PAGES.CALMCREW, route: ROUTES.CALMCREW },
+    { text: PAGES.HELPLINES, route: ROUTES.HELPLINES },
     // { text: PAGES.JOT_IT, route: ROUTES.JOURNALS },
   ];
   //

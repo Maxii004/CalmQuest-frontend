@@ -25,7 +25,7 @@ import { ISO_WITHOUT_TIME } from "../../../base/constants/date-formatting";
 import { toast } from "react-toastify";
 import COLORS from "../../../base/constants/colors";
 
-const QuestionnaireForm = ({ attempted, handleOnClose }) => {
+const QuestionnaireForm = ({ attempted, handleOnClose, setOnSubmit }) => {
   const axiosPrivate = useAxiosPrivate();
   const { user } = useAuth();
   //
@@ -76,6 +76,7 @@ const QuestionnaireForm = ({ attempted, handleOnClose }) => {
               }
             );
             handleOnClose();
+            setOnSubmit(true);
             if (!response?.data) {
               toast.error("Something went wrong");
             }

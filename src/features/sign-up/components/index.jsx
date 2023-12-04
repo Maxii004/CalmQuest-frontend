@@ -85,7 +85,6 @@ const SignUp = () => {
               toast.success("Sign Up Sccessful!");
               navigate(ROUTES.HOME);
             } catch (error) {
-              console.log(error);
               toast.error(error?.response?.data?.message);
             }
           }}

@@ -41,8 +41,8 @@ const UserMenu = ({ handleCloseUserMenu, anchorElUser }) => {
       <MenuItem
         key={PAGES.PROFILE}
         onClick={() => {
-          navigate(ROUTES.PROFILE.replace(":id", user?.userId));
           handleClose();
+          navigate(ROUTES.PROFILE.replace(":id", user?.userId));
         }}
         sx={{
           bgcolor: COLORS.CRYSTAL,
@@ -76,7 +76,7 @@ const UserMenu = ({ handleCloseUserMenu, anchorElUser }) => {
         onClick={handleLogOut}
         sx={{
           bgcolor: COLORS.CRYSTAL,
-          color: getColor(ROUTES.PROFILE.replace(":id", user?.userId)),
+          color: COLORS.WHITE,
           transition: {
             xs: "padding-left 0.5s ease",
             md: "none",
